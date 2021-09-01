@@ -18,7 +18,13 @@ ip compressOctets(octet oct1, octet oct2, octet oct3, octet oct4)
 
 void extractOctets(ip theIP, octet& oct1, octet& oct2, octet& oct3, octet& oct4)
 {
-    
+    oct4 = theIP & 255;
+    theIP >>= 8;
+    oct3 = theIP & 255;
+    theIP >>= 8;
+    oct2 = theIP & 255;
+    theIP >>= 8;
+    oct1 = theIP & 255;
 }
 
 
