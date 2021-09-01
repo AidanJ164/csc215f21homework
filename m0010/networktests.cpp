@@ -27,14 +27,14 @@ TEST_CASE("compressOctets - testing the in class example")
 
 TEST_CASE("compressOctets - testing a class B ip address")
 {
-    octet oct1 = 187,
+    octet oct1 = 184,
           oct2 = 2,
           oct3 = 206,
           oct4 = 97;
 
     ip resultIP = compressOctets(oct1, oct2, oct3, oct4);
 
-    REQUIRE(3137523297 == resultIP);
+    REQUIRE(3087191649 == resultIP);
 }
 
 TEST_CASE("compressOctets - testing a class C ip address")
