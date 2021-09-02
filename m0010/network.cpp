@@ -30,5 +30,50 @@ void extractOctets(ip theIP, octet& oct1, octet& oct2, octet& oct3, octet& oct4)
 
 networkType getNetworkType(ip theIP)
 {
-    return INVALID;
+    networkType netType = INVALID;
+    octet oct1, oct2, oct3, oct4;
+
+    extractOctets(theIP, oct1, oct2, oct3, oct4);
+
+    if (oct1 == 0)
+    {
+        netType = INVALID;
+    }
+    else if (oct1 <= 127)
+    {
+        netType = CLASSA;
+        if (oct1 == 10)
+        {
+            netType = APRIVATE;
+        }
+        if (oct1 == 127)
+        {
+            netType = LOCALHOST;
+        }
+    }
+    else if (oct1 <= 191)
+    {
+        netType = CLASSB;
+        if ((oct1 == 172) && (oct2 >= 16) && (oct2 <= 31))
+        {
+            netType = BPRIVATE;
+        }
+    }
+    else if (oct1 <= 223)
+    {
+        netType = CLASSC;
+        if ((oct1 == 192) && (oct2 == 168))
+        {
+            netType = CPRIVATE;
+        }
+    }
+    else if (oct1 <= 239)
+    {
+        netType = CLASSD;
+    }
+    else if (oct1 <= 255)
+    {
+        netType = CLASSE;
+    }
+    return netType;
 }

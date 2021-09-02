@@ -156,3 +156,124 @@ TEST_CASE("extractOctets - manually testing a class E ip")
     CHECK(198 == oct3);
     CHECK(203 == oct4);
 }
+
+TEST_CASE("getNetworkType - testing the document example")
+{
+    ip theIP = compressOctets(151, 159, 15, 20);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CLASSB == netType);
+
+    theIP = compressOctets(172, 18, 4, 20);
+    netType = getNetworkType(theIP);
+    REQUIRE(BPRIVATE == netType);
+}
+
+TEST_CASE("getNetworkType - classifying Class A networks")
+{
+    ip theIP = compressOctets(19, 234, 19, 205);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CLASSA == netType);
+
+    theIP = compressOctets(109, 182, 109, 203);
+    netType = getNetworkType(theIP);
+    REQUIRE(CLASSA == netType);
+}
+
+TEST_CASE("getNetworkType - classifying Class B networks")
+{
+    ip theIP = compressOctets(189, 21, 193, 2);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CLASSB == netType);
+
+    theIP = compressOctets(128, 0, 0, 0);
+    netType = getNetworkType(theIP);
+    REQUIRE(CLASSB == netType);
+}
+
+TEST_CASE("getNetworkType - classifying Class C networks")
+{
+    ip theIP = compressOctets(201, 89, 213, 190);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CLASSC == netType);
+
+    theIP = compressOctets(192, 103, 109, 203);
+    netType = getNetworkType(theIP);
+    REQUIRE(CLASSC == netType);
+}
+
+TEST_CASE("getNetworkType - classifying Class D networks")
+{
+    ip theIP = compressOctets(231, 23, 192, 25);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CLASSD == netType);
+
+    theIP = compressOctets(239, 255, 255, 255);
+    netType = getNetworkType(theIP);
+    REQUIRE(CLASSD == netType);
+}
+
+TEST_CASE("getNetworkType - classifying Class E networks")
+{
+    ip theIP = compressOctets(240, 0, 0, 0);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CLASSE == netType);
+
+    theIP = compressOctets(253, 25, 5, 164);
+    netType = getNetworkType(theIP);
+    REQUIRE(CLASSE == netType);
+}
+
+TEST_CASE("getNetworkType - testing INVALID cases")
+{
+    ip theIP = compressOctets(0, 234, 19, 205);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(INVALID == netType);
+
+    theIP = compressOctets(0, 32, 221, 109);
+    netType = getNetworkType(theIP);
+    REQUIRE(INVALID == netType);
+}
+
+TEST_CASE("getNetworkType - testing APRIVATE cases")
+{
+    ip theIP = compressOctets(10, 283, 191, 205);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(APRIVATE == netType);
+
+    theIP = compressOctets(10, 32, 21, 9);
+    netType = getNetworkType(theIP);
+    REQUIRE(APRIVATE == netType);
+}
+
+TEST_CASE("getNetworkType - testing LOCALHOST cases")
+{
+    ip theIP = compressOctets(127, 2, 32, 254);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(LOCALHOST == netType);
+
+    theIP = compressOctets(127, 132, 221, 19);
+    netType = getNetworkType(theIP);
+    REQUIRE(LOCALHOST == netType);
+}
+
+TEST_CASE("getNetworkType - testing BPRIVATE cases")
+{
+    ip theIP = compressOctets(172, 17, 199, 5);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(BPRIVATE == netType);
+
+    theIP = compressOctets(172, 31, 1, 9);
+    netType = getNetworkType(theIP);
+    REQUIRE(BPRIVATE == netType);
+}
+
+TEST_CASE("getNetworkType - testing CPRIVATE cases")
+{
+    ip theIP = compressOctets(192, 168, 193, 292);
+    networkType netType = getNetworkType(theIP);
+    REQUIRE(CPRIVATE == netType);
+
+    theIP = compressOctets(192, 168, 1, 1);
+    netType = getNetworkType(theIP);
+    REQUIRE(CPRIVATE == netType);
+}
