@@ -236,7 +236,7 @@ TEST_CASE("getNetworkType - testing INVALID cases")
 
 TEST_CASE("getNetworkType - testing APRIVATE cases")
 {
-    ip theIP = compressOctets(10, 283, 191, 205);
+    ip theIP = compressOctets(10, 233, 191, 205);
     networkType netType = getNetworkType(theIP);
     REQUIRE(APRIVATE == netType);
 
@@ -269,7 +269,7 @@ TEST_CASE("getNetworkType - testing BPRIVATE cases")
 
 TEST_CASE("getNetworkType - testing CPRIVATE cases")
 {
-    ip theIP = compressOctets(192, 168, 193, 292);
+    ip theIP = compressOctets(192, 168, 193, 22);
     networkType netType = getNetworkType(theIP);
     REQUIRE(CPRIVATE == netType);
 
