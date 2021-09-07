@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sudoku.cpp">
+    <ClCompile Include="m0020.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
