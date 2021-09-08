@@ -1,16 +1,21 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 using namespace std;
 
-int findMinimum(double a[], int size);
-int findMaximum(double a[], int size);
+float* findMinimum(float a[], int size);
+float* findMaximum(float a[], int size);
 
 int main(int argc, char* argv[])
 {
-    ifstream input;
-    ofstream output;
+    ifstream fin;
+    ofstream fout;
     int size;
-    float* fptr;
+    int i = 0;
+    int j = 0;
+    float* array = nullptr;
+    float* minptr = nullptr;
+    float* maxptr = nullptr;
 
     if (argc != 3)
     {
@@ -18,19 +23,94 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    input.open(argv[1]);
+    fin.open(argv[1]);
 
-    if (!input.is_open())
+    if (!fin.is_open())
     {
         cout << "Unable to open input file: " << argv[1];
         return 0;
     }
 
-    output.open(argv[2]);
+    fout.open(argv[2]);
 
-    if (!output.is_open())
+    if (!fout.is_open())
     {
         cout << "Unable to open output file: " << argv[2];
+        fin.close();
         return 0;
     }
+
+    fin >> size;
+    array = new (nothrow) float [size];
+    if (array == nullptr)
+    {
+        cout << "Unable to allocate memory";
+        return 0;
+    }
+
+    while ((i != size) && (fin >> array[i]))
+    {
+        i++;
+    }
+    size = i;
+
+    minptr = findMinimum(array, size);
+    maxptr = findMaximum(array, size);
+
+    fout << size << endl;
+    fout << setprecision(3) << fixed << showpoint;
+    fout << *minptr << " - " << *maxptr << endl;
+
+    for (i = 0; i < size; i++)
+    {
+        fout << setw(15) << array[i];
+        j++;
+        if (j == 5)
+        {
+            fout << endl;
+            j = 0;
+        }
+    }
+
+    delete[] array;
+    fin.close();
+    fout.close();
+}
+
+
+float* findMinimum(float a[], int size)
+{
+    int i;
+    float min = a[0];
+    float* minptr = nullptr;
+
+    for (i = 1; i < size; i++)
+    {
+        if (min > a[i])
+        {
+            min = a[i];
+            minptr = &a[i];
+        }
+    }
+
+    return minptr;
+}
+
+
+float* findMaximum(float a[], int size)
+{
+    int i;
+    float max = a[0];
+    float* maxptr = nullptr;
+
+    for (i = 1; i < size; i++)
+    {
+        if (max < a[i])
+        {
+            max = a[i];
+            maxptr = &a[i];
+        }
+    }
+
+    return maxptr;
 }
