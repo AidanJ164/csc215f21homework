@@ -6,8 +6,6 @@ using namespace std;
 float* findMinimum(float a[], int size);
 float* findMaximum(float a[], int size);
 
-// m0020.exe inputfile outputfile
-
 int main(int argc, char* argv[])
 {
     ifstream fin;
@@ -81,6 +79,8 @@ int main(int argc, char* argv[])
     delete[] array;
     fin.close();
     fout.close();
+
+    return 0;
 }
 
 
