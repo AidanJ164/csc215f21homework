@@ -73,6 +73,10 @@ int main(int argc, char* argv[])
             j = 0;
         }
     }
+    if (size % 5 != 0)
+    {
+        fout << endl;
+    }
 
     delete[] array;
     fin.close();
