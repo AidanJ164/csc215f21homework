@@ -12,17 +12,19 @@ int main(int argc, char* argv[])
     ofstream fout;
     int size;
     int i = 0;
-    int j = 0;
+    int j = 1;
     float* array = nullptr;
     float* minptr = nullptr;
     float* maxptr = nullptr;
 
+    //Check command line args
     if (argc != 3)
     {
-        cout << "Usage: m0020.exe inputfile outputfile";
+        cout << "usage: m0020.exe inputfile outputfile";
         return 0;
     }
 
+    //Open input file
     fin.open(argv[1]);
 
     if (!fin.is_open())
@@ -31,6 +33,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
+    //Open output file
     fout.open(argv[2]);
 
     if (!fout.is_open())
@@ -40,6 +43,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
+    //receive initial size and allocate an array of that size
     fin >> size;
     array = new (nothrow) float [size];
     if (array == nullptr)
@@ -48,14 +52,17 @@ int main(int argc, char* argv[])
         return 0;
     }
 
+
     while ((i != size) && (fin >> array[i]))
     {
         i++;
     }
     size = i;
 
+
     minptr = findMinimum(array, size);
     maxptr = findMaximum(array, size);
+
 
     fout << size << endl;
     fout << setprecision(3) << fixed << showpoint;
@@ -64,17 +71,18 @@ int main(int argc, char* argv[])
     for (i = 0; i < size; i++)
     {
         fout << setw(15) << array[i];
-        j++;
         if (j == 5)
         {
             fout << endl;
             j = 0;
         }
+        j++;
     }
-    if (size % 5 != 0)
+    if ((size % 5) != 0)
     {
         fout << endl;
     }
+
 
     delete[] array;
     fin.close();
