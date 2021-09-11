@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     ofstream fout;
     int size;
     int i = 0;
-    int j = 1;
+    int j = 0;
     float* array = nullptr;
     float* minptr = nullptr;
     float* maxptr = nullptr;
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     //Check command line args
     if (argc != 3)
     {
-        cout << "usage: m0020.exe inputfile outputfile";
+        cout << "Usage: m0020.exe inputfile outputfile";
         return 0;
     }
 
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         fin.close();
         return 0;
     }
-
+    
     //receive initial size and allocate an array of that size
     fin >> size;
     array = new (nothrow) float [size];
@@ -52,13 +52,13 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-
+    
     while ((i != size) && (fin >> array[i]))
     {
         i++;
     }
     size = i;
-
+    
 
     minptr = findMinimum(array, size);
     maxptr = findMaximum(array, size);
@@ -67,27 +67,26 @@ int main(int argc, char* argv[])
     fout << size << endl;
     fout << setprecision(3) << fixed << showpoint;
     fout << *minptr << " - " << *maxptr << endl;
-
+    
     for (i = 0; i < size; i++)
     {
         fout << setw(15) << array[i];
+        j++;
         if (j == 5)
         {
             fout << endl;
             j = 0;
         }
-        j++;
     }
     if ((size % 5) != 0)
     {
         fout << endl;
     }
 
-
     delete[] array;
     fin.close();
     fout.close();
-
+    
     return 0;
 }
 
@@ -96,7 +95,7 @@ float* findMinimum(float a[], int size)
 {
     int i;
     float min = a[0];
-    float* minptr = nullptr;
+    float * minptr = &a[0];
 
     for (i = 1; i < size; i++)
     {
@@ -115,7 +114,7 @@ float* findMaximum(float a[], int size)
 {
     int i;
     float max = a[0];
-    float* maxptr = nullptr;
+    float* maxptr = &a[0];
 
     for (i = 1; i < size; i++)
     {
