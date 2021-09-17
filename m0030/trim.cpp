@@ -1,6 +1,6 @@
 #include "trim.h"
 
-void cTrim(char cString[100], trimType method)
+void cTrim(char *cString, trimType method)
 {
     int i = 0;
 
@@ -11,16 +11,17 @@ void cTrim(char cString[100], trimType method)
 
     if ((method == FRONT) || (method == BOTH))
     {
-        while (isspace(cString[i]) != 0)
+        while ((isspace(cString[i]) != 0) && (i < strlen(cString)) )
         {
             i++;
         }
         strcpy(cString, &cString[i]);
     }
+
     if ((method == END) || (method == BOTH))
     {
         i = strlen(cString) - 1;
-        while (isspace(cString[i]) != 0)
+        while ((i >= 0) && (isspace(cString[i]) != 0))
         {
             i--;
         }

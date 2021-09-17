@@ -7,5 +7,5 @@ using namespace std;
 
 enum trimType { BOTH, FRONT, END };
 
-void cTrim(char cString[100], trimType method);
+void cTrim(char *cString, trimType method);
 void sTrim(string& cplusString, trimType method);
