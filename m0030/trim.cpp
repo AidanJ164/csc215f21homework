@@ -3,6 +3,7 @@
 void cTrim(char *cString, trimType method)
 {
     int i = 0;
+    long long j;
 
     if (strcmp(cString, "") == 0)
     {
@@ -20,12 +21,13 @@ void cTrim(char *cString, trimType method)
 
     if ((method == END) || (method == BOTH))
     {
-        i = strlen(cString) - 1;
-        while ((i >= 0) && (isspace(cString[i]) != 0))
+        j = strlen(cString) - 1;
+
+        while ((j >= 0) && (isspace(cString[j]) != 0))
         {
-            i--;
+            j--;
         }
-        cString[i + 1] = '\0';
+        cString[j + 1] = '\0';
     }
 }
 
