@@ -146,3 +146,99 @@ TEST_CASE("cTrim - testing string with all whitespace")
         REQUIRE(strcmp(theString, theAnswer) == 0);
     }
 }
+
+TEST_CASE("sTrim - Testing c++ strings with ws at the end")
+{
+    string theString = "There is no ws.    ";
+    string theAnswer = "There is no ws.";
+
+    SECTION("END - ws at end")
+    {
+        sTrim(theString, END);
+        REQUIRE(theString == theAnswer);
+    }
+
+    SECTION("FRONT - ws at end")
+    {
+        sTrim(theString, FRONT);
+        REQUIRE(theString == "There is no ws.    ");
+    }
+
+    SECTION("BOTH - ws at end")
+    {
+        sTrim(theString, BOTH);
+        REQUIRE(theString == theAnswer);
+    }
+}
+
+TEST_CASE("sTrim - Testing c++ strings with ws at the start")
+{
+    string theString = "            There should not be white space up front.";
+    string theAnswer = "There should not be white space up front.";
+
+    SECTION("FRONT - ws up front")
+    {
+        sTrim(theString, FRONT);
+        REQUIRE(theString == theAnswer);
+    }
+
+    SECTION("END - ws up front")
+    {
+        sTrim(theString, END);
+        REQUIRE(theString == "            There should not be white space up front.");
+    }
+
+    SECTION("BOTH - ws up front")
+    {
+        sTrim(theString, BOTH);
+        REQUIRE(theString == theAnswer);
+    }
+}
+
+TEST_CASE("sTrim - Testing c strings with ws at both ends")
+{
+    string theString = "            There should not be white space anywhere.            ";
+    string theAnswer = "There should not be white space anywhere.";
+
+    SECTION("BOTH - ws at both ends")
+    {
+        sTrim(theString, BOTH);
+        REQUIRE(theString == theAnswer);
+    }
+
+    SECTION("FRONT - ws at both ends")
+    {
+        sTrim(theString, FRONT);
+        REQUIRE(theString == "There should not be white space anywhere.            ");
+    }
+
+    SECTION("END - ws at both ends")
+    {
+        sTrim(theString, END);
+        REQUIRE(theString == "            There should not be white space anywhere.");
+    }
+}
+
+TEST_CASE("sTrim - testing string with all whitespace")
+{
+    string theString = "               ";
+    string theAnswer = "";
+
+    SECTION("FRONT - all ws")
+    {
+        sTrim(theString, FRONT);
+        REQUIRE(theString == theAnswer);
+    }
+
+    SECTION("END - all ws")
+    {
+        sTrim(theString, END);
+        REQUIRE(theString == theAnswer);
+    }
+
+    SECTION("BOTH - all ws")
+    {
+        sTrim(theString, BOTH);
+        REQUIRE(theString == theAnswer);
+    }
+}
