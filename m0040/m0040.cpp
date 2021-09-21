@@ -15,7 +15,6 @@ struct empData
 void printFile(fstream& file);
 bool applyBonus(fstream& file, int id);
 
-
 int main(int argc, char** argv)
 {
     fstream file;
@@ -36,9 +35,18 @@ int main(int argc, char** argv)
 
     id = atoi(argv[2]);
 
-    printFile(file);
+    printFile( file );
 
+    if ( applyBonus( file , id ) )
+    {
+        cout << endl << "Employee ID " << id << " has been updated" << endl << endl;
+    }
+    else
+    {
+        cout << endl << "Employee ID " << id << " was not found." << endl << endl;
+    }
 
+    printFile( file );
 
     file.close();
 
@@ -55,14 +63,33 @@ void printFile(fstream& file)
     while ( file.read( (char*) &employee, sizeof(empData) ) )
     {
         cout << setw(7) << employee.id << " "
-            << left << setw(20) << employee.firstName
-            << setw(40) << employee.lastName << right
-            << " Salary: " << setw(10) << employee.salary
-            << " Bonus: " << setw(10) << employee.bonus << endl;
+             << left << setw(20) << employee.firstName
+             << setw(40) << employee.lastName << right
+             << " Salary: " << setw(10) << employee.salary
+             << " Bonus: " << setw(10) << employee.bonus << endl;
     }
+    file.clear();
 }
 
 bool applyBonus(fstream& file, int id)
 {
-    return true;
+    empData employee;
+
+    file.seekg( 0 , ios::beg );
+
+    while ( file.read( ( char* ) &employee, sizeof( empData ) ) )
+    { 
+        if (employee.id == id)
+        {
+            employee.bonus += 500;
+
+            file.seekp( - int( sizeof( empData ) ), ios::cur);
+            file.write( (char *) &employee , sizeof( empData ) );
+
+            return true;
+        }
+    }
+    file.clear();
+
+    return false;
 }
