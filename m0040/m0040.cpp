@@ -12,34 +12,36 @@ struct empData
     double bonus;
 };
 
-void printFile(fstream& file);
-bool applyBonus(fstream& file, int id);
+void printFile( fstream& file );
+bool applyBonus( fstream& file, int id );
 
-int main(int argc, char** argv)
+int main( int argc, char** argv )
 {
     fstream file;
     int id;
 
-    if (argc != 3)
+    if ( argc != 3 )
     {
         cout << "Usage: m0040.exe binaryData employeeID";
         return 0;
     }
 
-    file.open(argv[1], ios::in | ios::out | ios::ate | ios::binary);
-    if (!file.is_open())
+
+    file.open( argv[1], ios::in | ios::out | ios::ate | ios::binary );
+
+    if ( !file.is_open() )
     {
         cout << "Unable to open binary file: " << argv[1];
         return 0;
     }
 
-    id = atoi(argv[2]);
+    id = atoi( argv[2] );
 
     printFile( file );
 
     if ( applyBonus( file , id ) )
     {
-        cout << endl << "Employee ID " << id << " has been updated" << endl << endl;
+        cout << endl << "Employee ID " << id << " has been updated." << endl << endl;
     }
     else
     {
@@ -53,11 +55,11 @@ int main(int argc, char** argv)
     return  0;
 }
 
-void printFile(fstream& file)
+void printFile( fstream& file )
 {
     empData employee;
 
-    file.seekg(0, ios::beg);
+    file.seekg( 0, ios::beg );
     cout << setprecision(2) << fixed << showpoint;
 
     while ( file.read( (char*) &employee, sizeof(empData) ) )
@@ -71,20 +73,21 @@ void printFile(fstream& file)
     file.clear();
 }
 
-bool applyBonus(fstream& file, int id)
+bool applyBonus( fstream& file, int id )
 {
     empData employee;
+    int size = sizeof( empData );
 
     file.seekg( 0 , ios::beg );
 
-    while ( file.read( ( char* ) &employee, sizeof( empData ) ) )
+    while ( file.read( ( char* ) &employee, size ) )
     { 
-        if (employee.id == id)
+        if ( employee.id == id )
         {
             employee.bonus += 500;
 
-            file.seekp( - int( sizeof( empData ) ), ios::cur);
-            file.write( (char *) &employee , sizeof( empData ) );
+            file.seekp( -size, ios::cur );
+            file.write( (char *) &employee , size );
 
             return true;
         }
