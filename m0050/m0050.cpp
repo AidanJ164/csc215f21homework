@@ -17,6 +17,7 @@ struct empData
 };
 
 bool sortByID( empData lhs, empData rhs );
+bool sortBySalary( empData lhs, empData rhs );
 
 int main(int argc, char** argv)
 {
@@ -91,6 +92,10 @@ int main(int argc, char** argv)
     {
         sort(vemployee.begin(), vemployee.end(), sortByID);
     }
+    else if (strcmp(argv[3], "-s") == 0)
+    {
+        sort(vemployee.begin(), vemployee.end(), sortBySalary);
+    }
 
 
 
@@ -113,4 +118,9 @@ int main(int argc, char** argv)
 bool sortByID(empData lhs, empData rhs)
 {
     return (lhs.id < rhs.id);
+}
+
+bool sortBySalary( empData lhs, empData rhs )
+{
+    return ( lhs.salary > rhs.salary );
 }
