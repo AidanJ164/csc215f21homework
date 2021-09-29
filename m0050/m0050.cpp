@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <algorithm>
 using namespace std;
 
 struct empData
@@ -14,6 +15,8 @@ struct empData
     double salary;
     double bonus;
 };
+
+bool sortByID( empData lhs, empData rhs );
 
 int main(int argc, char** argv)
 {
@@ -83,6 +86,16 @@ int main(int argc, char** argv)
         vemployee.push_back(employee);
     }
 
+    //Sort
+    if (strcmp(argv[3], "-i") == 0)
+    {
+        sort(vemployee.begin(), vemployee.end(), sortByID);
+    }
+
+
+
+
+
     //Output to file
     fout << header << endl;
     fout << setprecision(2) << fixed << showpoint;
@@ -95,4 +108,9 @@ int main(int argc, char** argv)
     }
 
     return 0;
+}
+
+bool sortByID(empData lhs, empData rhs)
+{
+    return (lhs.id < rhs.id);
 }
