@@ -3,5 +3,5 @@
 
 using namespace std;
 
-double newtonApprox( double start, function <double(double)> f,
-                     function <double(double)> fP, double epsilon );
+double newtonApprox( double start, function <double(double)> func,
+                     function <double(double)> funcP, double epsilon );

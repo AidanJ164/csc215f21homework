@@ -1,16 +1,16 @@
 #include "newton.h"
 
-double newtonApprox(double start, function <double(double)> f,
-                    function <double(double)> fP, double epsilon)
+double newtonApprox(double x, function <double(double)> func,
+                    function <double(double)> funcP, double epsilon)
 {
-    if ( fabs( f(start) ) < epsilon )
+    if ( fabs( func(x) ) < epsilon )
     {
-        return start;
+        return x;
     }
 
-    start = start - ( f( start ) / fP( start ) );
+    x = x - ( func( x ) / funcP( x ) );
     
-    start = newtonApprox(start, f, fP, epsilon);
+    x = newtonApprox(x, func, funcP, epsilon);
 
-    return start;
+    return x;
 }
