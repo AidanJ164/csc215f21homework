@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TEST_CASE("constructor")
+TEST_CASE("sortedSingle - constructor")
 {
     sortedSingle list;
 
@@ -13,7 +13,7 @@ TEST_CASE("constructor")
     REQUIRE(list.size() == 0);
 }
 
-TEST_CASE("empty")
+TEST_CASE("sortedSingle - empty")
 {
     sortedSingle list;
 
@@ -31,7 +31,7 @@ TEST_CASE("empty")
     }
 }
 
-TEST_CASE("size")
+TEST_CASE("sortedSingle - size")
 {
     sortedSingle list;
 
@@ -57,7 +57,7 @@ TEST_CASE("size")
     }
 }
 
-TEST_CASE("find")
+TEST_CASE("sortedSingle - find")
 {
     sortedSingle list;
     
@@ -101,7 +101,7 @@ TEST_CASE("find")
     }
 }
 
-TEST_CASE("retrievePosition")
+TEST_CASE("sortedSingle - retrievePosition")
 {
     sortedSingle list;
 
@@ -145,5 +145,105 @@ TEST_CASE("retrievePosition")
     {
         REQUIRE(list.retrievePosition(8) == 0);
         REQUIRE(list.retrievePosition(-4) == 0);
+    }
+}
+
+TEST_CASE("sortedSingle - insert")
+{
+    sortedSingle list;
+    ostringstream sout;
+
+    SECTION("empty")
+    {
+        CHECK(list.insert(4));
+        list.print(sout);
+        REQUIRE(sout.str() == "4");
+    }
+
+    SECTION("front")
+    {
+        list.insert(5);
+        CHECK(list.insert(4));
+
+        list.print(sout);
+        REQUIRE(sout.str() == "4, 5");
+    }
+
+    SECTION("middle")
+    {
+        list.insert(6);
+        list.insert(5);
+        list.insert(3);
+        list.insert(2);
+        CHECK(list.insert(4));
+
+        list.print(sout);
+        REQUIRE(sout.str() == "2, 3, 4, 5, 6");
+    }
+
+    SECTION("end")
+    {
+        list.insert(6);
+        list.insert(5);
+        list.insert(3);
+        list.insert(2);
+        list.insert(4);
+        CHECK(list.insert(8));
+        CHECK(list.insert(11));
+
+        list.print(sout);
+        REQUIRE(sout.str() == "2, 3, 4, 5, 6, 8, 11");
+    }
+}
+
+TEST_CASE("sortedSingle - print")
+{
+    sortedSingle list;
+    ostringstream sout;
+
+    SECTION("empty")
+    {
+        list.print(sout);
+        REQUIRE(sout.str() == "");
+    }
+
+    SECTION("one item")
+    {
+        list.insert(5);
+        list.print(sout);
+        REQUIRE(sout.str() == "5");
+    }
+
+    SECTION("two items")
+    {
+        list.insert(5);
+        list.insert(10);
+
+        list.print(sout);
+        REQUIRE(sout.str() == "5, 10");
+    }
+
+    SECTION("five items")
+    {
+        list.insert(3);
+        list.insert(6);
+        list.insert(9);
+        list.insert(12);
+        list.insert(15);
+
+        list.print(sout);
+        REQUIRE(sout.str() == "3, 6, 9, 12, 15");
+    }
+
+    SECTION("different seperator")
+    {
+        list.insert(3);
+        list.insert(6);
+        list.insert(9);
+        list.insert(12);
+        list.insert(15);
+
+        list.print(sout, "-");
+        REQUIRE(sout.str() == "3-6-9-12-15");
     }
 }
