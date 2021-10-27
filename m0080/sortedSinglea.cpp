@@ -40,3 +40,37 @@ int sortedSingle::size()
     
     return count;
 }
+
+bool sortedSingle::find(int item)
+{
+    node* temp = headptr;
+
+    while (temp != nullptr)
+    {
+        if (temp->theItem == item)
+        {
+            return true;
+        }
+        temp = temp->next;
+    }
+
+    return false;
+}
+
+int sortedSingle::retrievePosition(int item)
+{
+    node* temp = headptr;
+    int index = 1;
+
+    while (temp != nullptr)
+    {
+        if (temp->theItem == item)
+        {
+            return index;
+        }
+        index++;
+        temp = temp->next;
+    }
+
+    return 0;
+}
