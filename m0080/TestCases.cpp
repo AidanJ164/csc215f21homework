@@ -247,3 +247,109 @@ TEST_CASE("sortedSingle - print")
         REQUIRE(sout.str() == "3-6-9-12-15");
     }
 }
+
+TEST_CASE("sortedSingle - remove")
+{
+    sortedSingle list;
+    ostringstream sout;
+
+    SECTION("empty")
+    {
+        REQUIRE(!list.remove(1));
+        list.print(sout);
+        REQUIRE(sout.str() == "");
+    }
+
+    SECTION("first item in list")
+    {
+        list.insert(5);
+        list.insert(7);
+        CHECK(list.insert(4));
+
+        REQUIRE(list.remove(4));
+        list.print(sout);
+        REQUIRE(sout.str() == "5, 7");
+    }
+
+    SECTION("middle")
+    {
+        list.insert(4);
+        list.insert(6);
+        list.insert(1);
+        list.insert(5);
+        CHECK(list.insert(2));
+
+        REQUIRE(list.remove(4));
+        list.print(sout);
+        REQUIRE(sout.str() == "1, 2, 5, 6");
+    }
+
+    SECTION("end")
+    {
+        list.insert(4);
+        list.insert(6);
+        list.insert(1);
+        list.insert(5);
+        CHECK(list.insert(2));
+
+        REQUIRE(list.remove(6));
+        list.print(sout);
+        REQUIRE(sout.str() == "1, 2, 4, 5");
+    }
+
+    SECTION("one item in list")
+    {
+        CHECK(list.insert(4));
+
+        REQUIRE(list.remove(4));
+        list.print(sout);
+        REQUIRE(sout.str() == "");
+    }
+
+    SECTION("item not in list")
+    {
+        list.insert(4);
+        list.insert(6);
+        list.insert(1);
+        list.insert(5);
+        CHECK(list.insert(2));
+
+        REQUIRE(!list.remove(3));
+        list.print(sout);
+        REQUIRE(sout.str() == "1, 2, 4, 5, 6");
+    }
+
+    SECTION("duplicates")
+    {
+        list.insert(4);
+        list.insert(1);
+        list.insert(1);
+        list.insert(5);
+        CHECK(list.insert(2));
+
+        REQUIRE(list.remove(1));
+        list.print(sout);
+        REQUIRE(sout.str() == "1, 2, 4, 5");
+    }
+}
+
+TEST_CASE("sortedSingle - clear")
+{
+    sortedSingle list;
+    ostringstream sout;
+
+    SECTION("empty")
+    {
+        list.clear();
+        list.print(sout);
+        REQUIRE(sout.str() == "");
+    }
+
+    SECTION("one item in list")
+    {
+        list.insert(5);
+        list.clear();
+        list.print(sout);
+        REQUIRE(sout.str() == "");
+    }
+}
