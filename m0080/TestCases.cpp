@@ -342,6 +342,7 @@ TEST_CASE("sortedSingle - clear")
     {
         list.clear();
         list.print(sout);
+        REQUIRE(list.size() == 0);
         REQUIRE(sout.str() == "");
     }
 
@@ -350,6 +351,21 @@ TEST_CASE("sortedSingle - clear")
         list.insert(5);
         list.clear();
         list.print(sout);
+        REQUIRE(list.size() == 0);
+        REQUIRE(sout.str() == "");
+    }
+
+    SECTION("multiple items in list")
+    {
+        list.insert(4);
+        list.insert(6);
+        list.insert(1);
+        list.insert(5);
+        CHECK(list.insert(2));
+
+        list.clear();
+        list.print(sout);
+        REQUIRE(list.size() == 0);
         REQUIRE(sout.str() == "");
     }
 }
