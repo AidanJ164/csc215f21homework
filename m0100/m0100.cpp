@@ -80,11 +80,17 @@ void permute(int *p, rune arr[], int* used, int n, int k, int pos)
 
     if (pos == k)
     {
-        for (i = 0; i < k; i++)
+
+        if (arr[p[0]].type == POTENCY && arr[p[1]].type == ESSENCE
+            && arr[p[2]].type == ASPECT)
         {
-            cout << p[i] << " ";
+            for (i = 0; i < k; i++)
+            {
+                cout << arr[p[i]].name << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
+        
         return;
     }
 
