@@ -12,14 +12,17 @@ struct rune
     trait type;
 };
 
-void readFile(ifstream& fin, rune arr[], int& index);
+void readFile(ifstream& fin, rune arr[], int& n);
+void permute(int* p, rune arr[], int* used, int n, int k, int pos);
 
 int main(int argc, char** argv)
 {
     rune arr[300];
-    int used[300];
-    int index = 0;
-    int i;
+    int p[300] = { 0 };
+    int used[300] = { 0 };
+    int n = 0;
+    int k = 3;
+    int pos = 0;
     ifstream fin;
 
     if (argc != 2)
@@ -35,19 +38,15 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    readFile(fin, arr, index);
-
-    for (i = 0; i < index; i++)
-    {
-        cout << arr[i].name << "," << arr[i].type << endl;
-    }
+    readFile(fin, arr, n);
     
+    permute(p, arr, used, n, k, pos);
 
     fin.close();
     return 0;
 }
 
-void readFile(ifstream& fin, rune arr[], int& index)
+void readFile(ifstream& fin, rune arr[], int& n)
 {
     string line;
     string temp;
@@ -55,22 +54,48 @@ void readFile(ifstream& fin, rune arr[], int& index)
     getline(fin, line);
     while (getline(fin, line))
     {
-        arr[index].name = line.substr(0, line.find(','));
+        arr[n].name = line.substr(0, line.find(','));
         temp = line.substr(line.find(',') + 1);
 
         if (temp == "Potency")
         {
-            arr[index].type = POTENCY;
+            arr[n].type = POTENCY;
         }
         else if (temp == "Essence")
         {
-            arr[index].type = ESSENCE;
+            arr[n].type = ESSENCE;
         }
         else
         {
-            arr[index].type = ASPECT;
+            arr[n].type = ASPECT;
         }
 
-        index++;
+        n++;
+    }
+}
+
+void permute(int *p, rune arr[], int* used, int n, int k, int pos)
+{
+    int i;
+
+    if (pos == k)
+    {
+        for (i = 0; i < k; i++)
+        {
+            cout << p[i] << " ";
+        }
+        cout << endl;
+        return;
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        if (used[i] == 0)
+        {
+            p[pos] = i;
+            used[i] = 1;
+            permute(p, arr, used, n, k, pos + 1);
+            used[i] = 0;
+        }
     }
 }
