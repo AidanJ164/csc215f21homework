@@ -78,7 +78,7 @@ void permute(int *p, rune arr[], int* used, int n, int k, int pos)
 {
     int i;
 
-    if (pos == k)
+    if (pos == k) 
     {
 
         if (arr[p[0]].type == POTENCY && arr[p[1]].type == ESSENCE
