@@ -27,14 +27,14 @@ int main(int argc, char** argv)
 
     if (argc != 2)
     {
-        cout << "Usage: m0100.exe filename";
+        cout << "m0100.exe csvdatafile";
         return 0;
     }
 
     fin.open(argv[1]);
     if (!fin.is_open())
     {
-        cout << argv[1] << " could not be opened.";
+        cout << "Unable to open: " << argv[1];
         return 0;
     }
 
